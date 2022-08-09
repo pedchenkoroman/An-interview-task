@@ -1,0 +1,8 @@
+<div>
+  <h4>Select type of numbers to display</h4>
+  <label htmlFor="evenNumbersOnly">Display even numbers</label>
+  <!-- Get/Set checkbox value  -->
+  <input type="checkbox" id="evenNumbersOnly" [formControl]="isEven" />
+  <h4>Filtered numbers</h4>
+  {{ number$ | async }}
+</div>
