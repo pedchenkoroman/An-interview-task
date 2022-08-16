@@ -5,7 +5,7 @@ import {
   Inject,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subject, merge, Observable, partition } from 'rxjs';
+import { Subject, merge, Observable, partition, startWith } from 'rxjs';
 import { map, share } from 'rxjs/operators';
 import { NUMBERS_PROVIDER, NUMBERS_TOKEN } from './numbers.provider';
 
@@ -23,7 +23,10 @@ export class AppComponent implements OnInit {
   constructor(@Inject(NUMBERS_TOKEN) private numbers: number[]) {}
 
   ngOnInit() {
-    const [even$, odd$] = partition(this.isEven.valueChanges, Boolean);
+    const [even$, odd$] = partition(
+      this.isEven.valueChanges.pipe(startWith(false)),
+      Boolean
+    );
 
     const evenNumber$ = even$.pipe(
       map(() => this.numbers.filter((num) => num % 2 === 0))
